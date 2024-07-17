@@ -13,6 +13,13 @@ def write_to_file(data: dict, file_name: str):
         json.dump(data, file)
 
 
+def create_new_data(data: list):
+    new_data = dict()
+    for d in data:
+        new_data[d["dial_code"]] = random_float(2)
+    return new_data
+
+
 def remove_random_data(num: int, data: list):
     for i in range(0, num):
         random_element = random.choice(data)

@@ -4,10 +4,10 @@ class Operator:
 
 
 class _TrieNode:
-    def __init__(self, operator: str = ""):
+    def __init__(self, operator: str = "Empty"):
         self.children = dict()
         self.is_end = False
-        self.price = 0
+        self.price = None
         self.operator = operator
 
 
@@ -23,22 +23,29 @@ class Trie:
                 cur.children[n] = _TrieNode(operator=cur.operator)
             cur = cur.children[n]
         cur.is_end = True
-        if price < cur.price or not cur.price:
+        if not cur.price or price < cur.price:
             cur.price = price
             cur.operator = operator
 
-    def search(self, phone_num: str) -> str:
+    def search(self, phone_num: str) -> (str, any):
         cur = self.root
+        price = None
+        operator = "Empty"
 
         for n in phone_num:
             if not n.isdigit():
                 return "Wrong number"
-            elif n not in cur.children:
-                if cur.is_end:
-                    return cur.operator
-                else:
-                    return "Not found" if not cur.operator else cur.operator
+
+            if n not in cur.children:
+                return operator, price
+
             cur = cur.children[n]
+
+            if cur.is_end:
+                price = cur.price
+                operator = cur.operator
+
+        return operator, price
 
     def __repr__(self):
         def recur(node, indent):
