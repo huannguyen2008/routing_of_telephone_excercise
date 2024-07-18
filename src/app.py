@@ -1,15 +1,16 @@
 from src.trie import Trie
+from constant import Operator
 
 
 def create_trie(data_a: dict, data_b: dict):
     trie = Trie()
 
     for k, v in data_a.items():
-        trie.insert(phone_prefix=k, price=v, operator="A")
+        trie.insert(phone_prefix=k, price=v, operator=Operator.A)
 
     for k, v in data_b.items():
-        trie.insert(phone_prefix=k, price=v, operator="B")
-    print(trie.root.children)
+        trie.insert(phone_prefix=k, price=v, operator=Operator.B)
+
     return trie
 
 

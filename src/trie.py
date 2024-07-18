@@ -1,12 +1,7 @@
-class Operator:
-    A = "A"
-    B = "B"
-
-
 class _TrieNode:
     def __init__(self, operator: str = "Empty"):
         self.children = dict()
-        self.is_end = False
+        self.is_end = False  # to check whether the prefix is end when inserting
         self.price = None
         self.operator = operator
 
@@ -48,6 +43,15 @@ class Trie:
         return operator, price
 
     def __repr__(self):
+        """
+        Use a recursive function to print the Trie for debugging
+        Example:
+        4---None---Empty
+            3---0.05---B$
+                4---None---Empty
+                    5---0.7---A$
+        :return:
+        """
         def recur(node, indent):
             return "".join(indent + key + (f"---{child.price}" + f"---{child.operator}") + ("$" if child.is_end else "")
                            + recur(child, indent + "  ")
